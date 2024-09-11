@@ -22,6 +22,8 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf import settings
 from django.conf.urls.static import static
 
+from .views import index
+
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),  # 国际化配置
@@ -30,6 +32,7 @@ urlpatterns = [
 # 国际化路由
 urlpatterns += i18n_patterns(
     path(_('admin/'), admin.site.urls),
+    path(_("index/"), index, name="index"),  # TODO : TRUE INDEX PAGE
     path(_("blog/"), include("blog.urls", namespace='blog')),
     path(_("auth/"), include("blog_auth.urls", namespace="blog_auth")),
 )

@@ -44,7 +44,7 @@ def blog_login(request):
                     request.session.set_expiry(0)
                 else:
                     request.session.set_expiry(2_592_000)
-                return render(request, 'index.html', base_context)
+                return redirect(reverse('blog:index'))
             else:
                 # print('login: Failed!')
                 form.add_error('email', 'email or password wrong')
@@ -108,13 +108,6 @@ def _generate_captcha_in_model(email: str) -> str:
 
 
 def send_email_captcha(request):
-    """
-    get email and send the email
-    if you want to use the builtin sender (fuck! no way for 163)
-    you had to edit the info in .env to 1 and restart the server
-    :param request:
-    :return:
-    """
     # get email info
     email = request.GET.get('email')
     if not email:

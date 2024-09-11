@@ -25,13 +25,13 @@ def get_blog_content_with_avatar(blogs_content: list) -> list:
     return blogs
 
 
-def index(request):
+def all_blog(request):
     base_context = get_base_context(request=request)
     q = "【MAIN】"
-    # the content in the index' searching
+    # the content in the all_index' searching
     blogs_contents = Blog.objects.filter(Q(title__icontains="【!!!】") | Q(title__icontains="【!!】") | Q(title__icontains='【RULE】') | Q(title__icontains=q)).all()
     blogs: list = get_blog_content_with_avatar(blogs_content=blogs_contents)
-    return render(request, 'index.html', context=base_context | {"blogs": blogs})
+    return render(request, 'blogIndex.html', context=base_context | {"blogs": blogs})
 
 
 def detail_blog(request, blog_id):
