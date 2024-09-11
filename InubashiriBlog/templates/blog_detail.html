@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Detail{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'highlight/styles/default.min.css' %}">
+    <script src="{% static 'highlight/highlight.min.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <main class="container bg-white p-3 rounded">
+        <h1> {{ blog.title }} </h1>
+        <hr>
+
+        <div class="mt-2">
+            {% if not author_avatar %}
+                <img src="{% static 'images/default_avatar.jpg' %}" alt="mdo" width="40" height="40"
+                     class="rounded-circle">
+            {% else %}
+                <img src="{{ author_avatar }}" alt="user avatar" width="40" height="40" class="rounded-circle">
+            {% endif %}
+            {## TODO: CHECK#}
+            <span class="ms-2">{{ blog.author.username }}</span>
+            <span class="ms-2"> release at </span>
+            <span class="ms-2"> {{ blog.pub_time|date:"Y,m,d " }}</span>
+            <span class="ms-2"> y,m,d </span>
+            <span class="ms-2"> {{ blog.pub_time|date:" H:i:s" }}</span>
+        </div>
+        <hr>
+
+        <div class="py-2">
+            {{ blog.content|safe }}
+        </div>
+
+        <hr>
+
+        <div class="mt-2">
+            <h3>Comment ({{ blog.comments.all|length }})</h3>
+
+            <form action="{% url 'blog:pub_comment' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="blog_id" value="{{ blog.id }}">
+                <div class="mt-2">
+                    <input type="text" class="container" placeholder="enter comments please" name="content">
+                </div>
+                <div class="text-end mt-2">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
+        <hr>
+
+            <div class="mt-2">
+                <ul class="list-group list-group-flush">
+
+                    {% for item in comments %}
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between text-body-secondary">
+                                <div class="user-info">
+                                    {% if not item.comment_avatar %}
+                                        <img src="{% static 'images/default_avatar.jpg' %}" alt="mdo" width="32" height="32"
+                                             class="rounded-circle">
+                                    {% else %}
+                                        <img src="{{ item.comment_avatar }}" class="rounded-circle" width="40"
+                                             height="40" alt="">
+                                    {% endif %}
+
+                                    <span class="ms-2">{{ item.comment.author.username }}</span>
+                                </div>
+
+                                <div class="create-time" style="line-height: 40px">
+                                    {{ item.comment.pub_time|date:"Y-m-d H:i:s" }}
+                                </div>
+                            </div>
+                            <div class="mt-2">{{ item.comment.content }}</div>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+        <hr>
+    </main>
+
+    <script>
+        hljs.highlightAll();
+    </script>
+
+{% endblock %}

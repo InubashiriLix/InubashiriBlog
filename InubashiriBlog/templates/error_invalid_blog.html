@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}blog not found{% endblock %}
+
+{% block main %}
+<main class="container bg-white p-3 rounded">
+    <h1> BLOG NOT FOUND!</h1>
+    <div class="alert alert-warning" role="alert">
+      PAGE NOT FOUND!
+      Error Reason: {{ error }}
+    </div>
+</main>
+{% endblock %}

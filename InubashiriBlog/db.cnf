@@ -1,0 +1,5 @@
+[client]
+database = inubashiriblog
+user = root
+password = Lix0123456789
+default-character-set = utf8

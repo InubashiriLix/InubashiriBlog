@@ -1,0 +1,12 @@
+body{
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1500px; /* 设置一个合适的最大宽度 */
+    margin: 0 auto;
+}
+
+.row {
+    display: flex;
+    /*flex-wrap: nowrap; !* 禁止换行 *!*/
+    /*gap: 1rem; !* 卡片之间的间距 *!*/
+}

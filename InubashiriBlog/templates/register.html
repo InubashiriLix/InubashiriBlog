@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block head %}
+    <script src="{% static "jquery/jquery-3.7.1.min.js" %}"></script>
+    <script src="{% static "js/register.js" %}"></script>
+{% endblock %}
+{% block main %}
+    <main class='container p-4 rounded bg-white'>
+        <div style="max-width: 330px;" class="m-auto">
+            <h1>REGISTER</h1>
+            <form action="" method="POST">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+
+
+                    <div class="alert alert-danger">
+                        <ul>
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+
+                {% endif %}
+
+                <div class="mb-3">
+                    <lable>Username</lable>
+                    <input type="text" name="username" class="form-control" placeholder="enter your nickname">
+                    {% if form.username.errors %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in form.username.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" placeholder="enter your Email" aria-describedby="emailHelpInline">
+                    <div class="col-auto">
+                        <span id="emailHelpInline" class="form-text">
+                        Must be a Real Email that you can use.
+                        {% if form.username.errors %}
+                            <div class="alert alert-danger">
+                                <ul>
+                                    {% for error in form.username.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="mb-3">
+                    <label>Verification Code</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="captcha" placeholder="Enter Verification Code"
+                               aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="button" id="captcha-btn">send code in email
+                        </button>
+                    </div>
+                    {% if form.captcha.errors %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in form.captcha.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control" placeholder="enter password" aria-describedby="passwordHelpInline">
+                    <div class="col-auto">
+                        <span id="passwordHelpInline" class="form-text">
+                          Must be 8-20 characters long.
+                            {% if form.password.errors %}
+                                <div class="alert alert-danger">
+                            <ul>
+                                {% for error in form.password.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                            {% endif %}
+                        </span>
+                    </div>
+
+
+                </div>
+
+
+                <div class="mb-3">
+                    <button type="submit" class="btn-primary w-100">Register!</button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+{% endblock %}
+

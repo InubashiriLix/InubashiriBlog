@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog Index{% endblock %}
+
+{% block main %}
+    <main class='container p-4 rounded bg-white'>
+        <h2>Search Result ({{ blogs.all|length }})</h2>
+        <div class="row row-gap-4 row-cols-2">
+            {% for item in blogs %}
+                <div class="col">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="{% url 'blog:blog_detail' blog_id=item.blog.id %}">{{ item.blog.title }}</a>
+                        </div>
+                        <div class="card-body" style="height: 100px">
+                            <p class="card-text" style="height: 80px;">
+                                {{ item.blog.description }}
+                            </p>
+                        </div>
+                        <div class="card-footer text-body-secondary d-inline-flex justify-content-between">
+                            <div>
+                                {% if item.avatar %}
+                                    <img src="{{ item.avatar }}" alt="user avatar" width="40" height="40"
+                                         class="rounded-circle">
+                                {% else %}
+                                    <img src="{% static 'images/default_avatar.jpg' %}" class="rounded-circle"
+                                         width="40" height="40">
+                                {% endif %}
+                                {# TODO: use author avatar#}
+                                {{ item.blog.author.username }}
+                            </div>
+                            <div>
+                                {{ item.blog.pub_time|date:"Y-m-d H:i:s" }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {#    TODO: navi bar  #}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </main>
+
+{% endblock %}
+
+
+{#TODO: add an personal page#}
+{#TODO: multipages in sql#}
+
+
+
+
