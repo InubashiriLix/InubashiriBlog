@@ -31,8 +31,8 @@ urlpatterns = [
 
 # 国际化路由
 urlpatterns += i18n_patterns(
+    path(_(""), index, name="index"),
     path(_('admin/'), admin.site.urls),
-    path(_("index/"), index, name="index"),  # TODO : TRUE INDEX PAGE
     path(_("blog/"), include("blog.urls", namespace='blog')),
     path(_("auth/"), include("blog_auth.urls", namespace="blog_auth")),
 )
