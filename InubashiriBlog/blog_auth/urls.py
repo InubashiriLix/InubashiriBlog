@@ -14,5 +14,5 @@ urlpatterns = [
     path('register', views.register, name='register'),
     path('captcha', views.send_email_captcha, name='email'),
     path('logout', views.auth_logout, name='auth_logout'),
-    path('change_avatar', views.change_avatar, name='change_avatar'),
+    path('profile', views.get_profile_page, name='profile'),
 ]

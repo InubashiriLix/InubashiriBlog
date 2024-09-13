@@ -12,6 +12,7 @@ from django.views.decorators.http import require_http_methods, require_POST
 from django.core.mail import send_mail
 # models and forms
 from .models import CaptchaModel, AvatarModel
+from blog.models import Blog
 from .forms import RegisterForm, LoginForm, AvatarForm
 from django.contrib.auth import get_user_model, login, logout
 # customized functions / classes
@@ -73,17 +74,22 @@ def register(request):
             return render(request, 'register.html', context=base_context | {"form": form})
 
 
-@login_required()
+@login_required()  # it  must be login state so no more validations are needed
 @require_http_methods(["GET", "POST"])
-def change_avatar(request):
+def get_profile_page(request):
     # TODO: we need
     base_context = get_base_context(request=request)
+    user = request.user
     if request.method == "GET":
-        return render(request, 'personal_page.html', context=base_context)
+        blogs = Blog.objects.filter(author_id=user.id).all()
+        context_blog = {"blogs": blogs} if blogs else {"blogs": None}
+        # print("FUCK")
+        # for blog in blogs:
+        #     print(blog.id)
+        return render(request, 'profile.html', context=base_context | context_blog)
     else:  # POST
         form = AvatarForm(request.POST, files=request.FILES)
         if form.is_valid():
-            user = request.user
 
             # create new avatar model
             avatar = form.cleaned_data.get('avatar_file')
@@ -95,10 +101,11 @@ def change_avatar(request):
             # TODO: MAY BE YOU CAN CREATE A NEW USER CLASS AND ADD THE PREVIOUS LIST (MODEL LAYER USER CLASS "auth_user")
             user.save()
 
-            return redirect(reverse('blog:index'))
+            return redirect(reverse('blog_auth:profile'))
         else:
             print(form.errors)
-            return render(request, 'personal_page.html', context=base_context | {"form": form})
+            return render(request, 'profile.html', context=base_context | {"form": form, "user": user})
+
 
 
 def _generate_captcha_in_model(email: str) -> str:

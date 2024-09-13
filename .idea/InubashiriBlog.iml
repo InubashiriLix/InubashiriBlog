@@ -18,7 +18,7 @@
       <sourceFolder url="file://$MODULE_DIR$/InubashiriBlog/blog_auth" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/InubashiriBlog/snakes" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.10 (InubashiriBlog)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">

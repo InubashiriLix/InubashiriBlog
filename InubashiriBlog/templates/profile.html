@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}PROFILE{% endblock %}
+
+{% block main %}
+
+    {#    AVATAR DONE#}
+    {#    TODO: beatify#}
+    <main class='container p-4 rounded bg-white'>
+        <div>
+            {% if not avatar %}
+                <img src="{% static 'images/default_avatar.jpg' %}" alt="mdo" width="40" height="40"
+                     class="rounded-circle">
+            {% else %}
+                <img src="{{ avatar }}" alt="user avatar" width="80" height="80" class="rounded-circle">
+            {% endif %}
+        </div>
+
+        {% if form.errors %}
+            <div class="alert alert-warning" role="alert">
+                Error Reason:
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        <li>{{ field }}: {{ errors }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form action="{% url 'blog_auth:profile' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="avatar_file" class="form-label">Upload Avatar</label>
+                <input type="file" name="avatar_file" id="avatar_file" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary" name="btn-submit">SUBMIT AVATAR</button>
+        </form>
+    </main>
+
+    {#   blog section#}
+    {#    Done: views#}
+    {#    TODO: beati#}
+
+    <div>
+        <ul>
+            {% if blogs %}
+                <h3>Blogs </h3>
+                {% for blog in blogs %}
+                    <li>
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="{% url 'blog:blog_detail' blog_id=blog.id %}">{{ blog.title }}</a>
+                            </div>
+                            <div class="card-body" style="height: 40px">
+                                <p class="card-text" style="height: 30px;">
+                                    {{ blog.description|truncatechars:30 }}
+                                </p>
+                            </div>
+                            <div class="card-footer text-body-secondary d-inline-flex justify-content-between">
+                                <div>
+                                    {{ blog.author.username }}
+                                </div>
+                                <div>
+                                    {{ blog.pub_time|date:"Y-m-d H:i:s" }}
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <h3>No Blog Here!</h3>
+            {% endif %}
+        </ul>
+    </div>
+
+
+
+{% endblock %}
